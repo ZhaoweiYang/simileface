@@ -45,8 +45,8 @@
   /* ---------- HERO + scrolling poster grid ---------- */
   .hero{
     position:relative;
-    height:78vh;
-    min-height:560px;
+    height:66vh;
+    min-height:480px;
     overflow:hidden;
     background:#050505;
   }
@@ -137,10 +137,49 @@
     0%,100%{filter:drop-shadow(0 0 5px rgba(244,194,56,.35));}
     50%{filter:drop-shadow(0 0 22px rgba(244,194,56,.85));}
   }
+  .seal::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    border:2px solid rgba(244,194,56,.45);
+    z-index:-1;
+    animation:sealPing 2.6s ease-out infinite;
+    animation-delay:1.3s;
+  }
   @keyframes sealSpin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
-  @keyframes sealPing{0%{transform:scale(.92);opacity:.7;}70%,100%{transform:scale(1.6);opacity:0;}}
+  @keyframes sealPing{0%{transform:scale(.92);opacity:.7;}70%,100%{transform:scale(1.7);opacity:0;}}
+
+  /* twinkling sparkles around the badge */
+  .spark{
+    position:absolute;
+    width:16px;height:16px;
+    background:#fff;
+    clip-path:polygon(50% 0,59% 41%,100% 50%,59% 59%,50% 100%,41% 59%,0 50%,41% 41%);
+    filter:drop-shadow(0 0 5px rgba(255,236,170,.9));
+    opacity:0;
+    animation:twinkle 1.9s ease-in-out infinite;
+    pointer-events:none;
+  }
+  .spark.s1{top:-8px;left:6px;animation-delay:0s;}
+  .spark.s2{top:18px;right:-10px;width:12px;height:12px;animation-delay:.5s;}
+  .spark.s3{bottom:2px;left:-10px;width:13px;height:13px;animation-delay:.9s;}
+  .spark.s4{bottom:-6px;right:14px;width:10px;height:10px;animation-delay:1.3s;}
+  .spark.s5{top:50%;left:-14px;width:9px;height:9px;animation-delay:1.6s;}
+  @keyframes twinkle{
+    0%,100%{transform:scale(.2) rotate(0deg);opacity:0;}
+    50%{transform:scale(1) rotate(45deg);opacity:1;}
+  }
+
+  /* app name gold shimmer */
+  .app-name{animation:nameGlow 2.6s ease-in-out infinite;}
+  @keyframes nameGlow{
+    0%,100%{text-shadow:0 2px 10px rgba(0,0,0,.85);}
+    50%{text-shadow:0 2px 10px rgba(0,0,0,.85),0 0 16px rgba(244,194,56,.6);}
+  }
+
   @media (prefers-reduced-motion:reduce){
-    .seal,.seal-star,.seal::after{animation:none;}
+    .seal,.seal-star,.seal::after,.seal::before,.spark,.app-name,.btn-continue{animation:none;}
   }
   .seal .seal-text{
     position:absolute;inset:0;
@@ -303,6 +342,11 @@
     padding:18px;
     border-radius:40px;
     box-shadow:0 6px 18px rgba(244,194,56,.28);
+    animation:ctaPulse 2s ease-in-out infinite;
+  }
+  @keyframes ctaPulse{
+    0%,100%{box-shadow:0 6px 18px rgba(244,194,56,.28);}
+    50%{box-shadow:0 6px 28px rgba(244,194,56,.6);}
   }
   .btn-continue:active{transform:translateY(1px);}
   .inline-btn{margin:40px 0 0;}
@@ -366,6 +410,11 @@
                 <path d="M33 63 L46 47 L54 57 L61 49 L68 63 Z" fill="#f4c238"/>
               </svg>
             </div>
+            <span class="spark s1"></span>
+            <span class="spark s2"></span>
+            <span class="spark s3"></span>
+            <span class="spark s4"></span>
+            <span class="spark s5"></span>
           </div>
 
           <!-- right wheat -->
