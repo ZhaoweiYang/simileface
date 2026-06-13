@@ -223,33 +223,6 @@
     max-width:360px;
   }
 
-  /* ---------- Countdown ---------- */
-  .timer{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    margin:42px 0 8px;
-  }
-  .digit{
-    position:relative;
-    width:62px;height:78px;
-    border-radius:12px;
-    background:linear-gradient(#f6cb46,#eab932);
-    box-shadow:0 6px 0 rgba(0,0,0,.35), inset 0 2px 2px rgba(255,255,255,.5);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;font-size:42px;color:#1a1a1a;
-  }
-  .digit::after{
-    content:"";
-    position:absolute;left:6px;right:6px;top:50%;
-    height:2px;
-    background:rgba(0,0,0,.18);
-    transform:translateY(-1px);
-  }
-  .digit.gap{margin-right:4px;}
-  .colon{font-size:40px;font-weight:700;color:var(--gold);padding:0 2px;}
-
   /* ---------- Premium cards ---------- */
   .cards{
     display:flex;
@@ -429,18 +402,6 @@
       <h1 class="head">Join <span class="brand">Wallora</span> now</h1>
       <p class="sub">Unlock every premium wallpaper and exclusive collection, with new drops every week. Just $29.9 per month — cancel anytime.</p>
 
-      <!-- countdown -->
-      <div class="timer" id="timer">
-        <div class="digit" data-h1>0</div>
-        <div class="digit gap" data-h2>0</div>
-        <div class="colon">:</div>
-        <div class="digit" data-m1>0</div>
-        <div class="digit gap" data-m2>5</div>
-        <div class="colon">:</div>
-        <div class="digit" data-s1>0</div>
-        <div class="digit" data-s2>0</div>
-      </div>
-
       <!-- premium cards -->
       <div class="cards">
         <div class="pcard" id="pc1"><span class="ribbon">PREMIUM</span></div>
@@ -560,28 +521,6 @@
     pc3:'radial-gradient(120% 100% at 50% 20%, #6a5a44 0%, #342819 65%, #140f08 100%)'
   };
   Object.entries(cardGrads).forEach(([id,g])=>{ document.getElementById(id).style.backgroundImage=g; });
-
-  /* ---- countdown timer ---- */
-  let total = 5*60; // 5 minutes
-  const T = document.getElementById('timer');
-  const cells = {
-    h1:T.querySelector('[data-h1]'), h2:T.querySelector('[data-h2]'),
-    m1:T.querySelector('[data-m1]'), m2:T.querySelector('[data-m2]'),
-    s1:T.querySelector('[data-s1]'), s2:T.querySelector('[data-s2]')
-  };
-  function render(){
-    const h = Math.floor(total/3600);
-    const m = Math.floor((total%3600)/60);
-    const s = total%60;
-    cells.h1.textContent = Math.floor(h/10);
-    cells.h2.textContent = h%10;
-    cells.m1.textContent = Math.floor(m/10);
-    cells.m2.textContent = m%10;
-    cells.s1.textContent = Math.floor(s/10);
-    cells.s2.textContent = s%10;
-  }
-  render();
-  setInterval(()=>{ total = total>0 ? total-1 : 5*60; render(); }, 1000);
 </script>
 </body>
 </html>
