@@ -119,6 +119,29 @@
   .laurel.right{transform:scaleX(1);}
   .seal{position:relative;width:150px;height:150px;flex:0 0 auto;}
   .seal svg{width:100%;height:100%;display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5));}
+
+  /* attention-grabbing badge effects */
+  .seal{animation:sealBreathe 2.6s ease-in-out infinite, sealGlow 2.6s ease-in-out infinite;}
+  .seal-star{transform-origin:50% 50%;animation:sealSpin 18s linear infinite;}
+  .seal::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    border:2px solid rgba(244,194,56,.55);
+    z-index:-1;
+    animation:sealPing 2.6s ease-out infinite;
+  }
+  @keyframes sealBreathe{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+  @keyframes sealGlow{
+    0%,100%{filter:drop-shadow(0 0 5px rgba(244,194,56,.35));}
+    50%{filter:drop-shadow(0 0 22px rgba(244,194,56,.85));}
+  }
+  @keyframes sealSpin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+  @keyframes sealPing{0%{transform:scale(.92);opacity:.7;}70%,100%{transform:scale(1.6);opacity:0;}}
+  @media (prefers-reduced-motion:reduce){
+    .seal,.seal-star,.seal::after{animation:none;}
+  }
   .seal .seal-text{
     position:absolute;inset:0;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -332,7 +355,7 @@
 
           <!-- seal -->
           <div class="seal">
-            <svg viewBox="0 0 100 100" aria-hidden="true">
+            <svg class="seal-star" viewBox="0 0 100 100" aria-hidden="true">
               <path id="seal-path" fill="#f4c238" d=""/>
               <circle cx="50" cy="50" r="33" fill="none" stroke="#fff" stroke-width="1.5" opacity=".75"/>
             </svg>
