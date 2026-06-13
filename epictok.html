@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Epictok — Upgrade your subscription</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000;
+    --gold:#f4c238;
+    --gold-bright:#f6cb3e;
+    --gold-deep:#e0a92a;
+    --heading-gold:#f3b73a;
+    --text:#ffffff;
+    --muted:#9a9a9a;
+    --muted-dim:#7d7d7d;
+    --card:#161616;
+    --card-border:#2c2c2c;
+    --maxw:480px;
+  }
+
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:#000;}
+  body{
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    color:var(--text);
+    background:#000;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .page{
+    max-width:var(--maxw);
+    margin:0 auto;
+    position:relative;
+    background:#000;
+    min-height:100vh;
+    overflow:hidden;
+    padding-bottom:120px; /* room for sticky button */
+  }
+
+  /* ---------- HERO + scrolling poster grid ---------- */
+  .hero{
+    position:relative;
+    height:78vh;
+    min-height:560px;
+    overflow:hidden;
+    background:#050505;
+  }
+  .grid{
+    position:absolute;
+    inset:-8% 0 -8% 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    padding:0 8px;
+    filter:brightness(.62) saturate(.9);
+  }
+  .col{display:flex;flex-direction:column;gap:10px;}
+  .col.a{animation:scrollUp 38s linear infinite;}
+  .col.b{animation:scrollDown 32s linear infinite;}
+  .col.c{animation:scrollUp 30s linear infinite;}
+  @keyframes scrollUp{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+  @keyframes scrollDown{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+
+  .poster{
+    position:relative;
+    width:100%;
+    aspect-ratio:3/4.4;
+    border-radius:14px;
+    overflow:hidden;
+    background-size:cover;
+    background-position:center;
+    box-shadow:inset 0 -60px 50px -20px rgba(0,0,0,.85);
+    flex:0 0 auto;
+  }
+  .poster .title{
+    position:absolute;
+    left:0;right:0;bottom:14px;
+    text-align:center;
+    font-family:Georgia,'Times New Roman',serif;
+    color:#e7ddc9;
+    text-shadow:0 2px 8px rgba(0,0,0,.9);
+    padding:0 8px;
+  }
+  .poster .title .t{font-size:14px;font-weight:600;line-height:1.15;}
+  .poster .title .y{font-size:18px;letter-spacing:1px;margin-top:3px;opacity:.92;}
+
+  /* dark overlay so badge reads + fade into body */
+  .hero::after{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(120% 60% at 50% 42%, rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 35%, rgba(0,0,0,0) 60%),
+      linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 18%, rgba(0,0,0,0) 55%, rgba(0,0,0,.85) 82%, #000 100%);
+    pointer-events:none;
+  }
+
+  /* ---------- Badge ---------- */
+  .badge-wrap{
+    position:absolute;
+    top:46%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:3;
+    text-align:center;
+    width:100%;
+  }
+  .badge-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+  }
+  .laurel{width:78px;height:118px;flex:0 0 auto;color:var(--gold);}
+  .laurel.right{transform:scaleX(-1);}
+  .seal{position:relative;width:150px;height:150px;flex:0 0 auto;}
+  .seal svg{width:100%;height:100%;display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5));}
+  .seal .seal-text{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#141414;
+  }
+  .seal .free{font-weight:800;font-size:34px;letter-spacing:.5px;line-height:1;}
+  .seal .trial{font-weight:700;font-size:15px;margin-top:4px;}
+  .then{
+    margin-top:14px;
+    color:var(--gold);
+    font-weight:500;
+    font-size:18px;
+    line-height:1.3;
+    text-shadow:0 2px 10px rgba(0,0,0,.8);
+  }
+
+  /* ---------- Body content ---------- */
+  .content{
+    position:relative;
+    z-index:4;
+    margin-top:-40px;
+    padding:0 24px;
+    text-align:center;
+  }
+  h1.head{
+    margin:0;
+    font-weight:700;
+    font-size:30px;
+    line-height:1.15;
+  }
+  h1.head .line1{color:var(--heading-gold);display:block;}
+  h1.head .line2{color:#fff;display:block;margin-top:2px;}
+  .sub{
+    color:var(--muted);
+    font-size:18px;
+    font-weight:400;
+    margin:16px auto 0;
+    max-width:360px;
+  }
+
+  /* ---------- Countdown ---------- */
+  .timer{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin:42px 0 8px;
+  }
+  .digit{
+    position:relative;
+    width:62px;height:78px;
+    border-radius:12px;
+    background:linear-gradient(#f6cb46,#eab932);
+    box-shadow:0 6px 0 rgba(0,0,0,.35), inset 0 2px 2px rgba(255,255,255,.5);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:42px;color:#1a1a1a;
+  }
+  .digit::after{
+    content:"";
+    position:absolute;left:6px;right:6px;top:50%;
+    height:2px;
+    background:rgba(0,0,0,.18);
+    transform:translateY(-1px);
+  }
+  .digit.gap{margin-right:4px;}
+  .colon{font-size:40px;font-weight:700;color:var(--gold);padding:0 2px;}
+
+  /* ---------- Premium cards ---------- */
+  .cards{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin:46px 0 0;
+  }
+  .pcard{
+    position:relative;
+    width:30%;
+    aspect-ratio:1/1;
+    border-radius:14px;
+    overflow:hidden;
+    border:2px solid var(--gold);
+    background-size:cover;background-position:center;
+    box-shadow:0 8px 22px rgba(0,0,0,.5);
+  }
+  .pcard.center{
+    width:38%;
+    transform:scale(1.12);
+    z-index:2;
+    border-radius:16px;
+    box-shadow:0 12px 30px rgba(0,0,0,.6);
+  }
+  .ribbon{
+    position:absolute;top:10px;left:-2px;
+    background:linear-gradient(#f4c238,#e3ab2c);
+    color:#1a1a1a;
+    font-size:10px;font-weight:700;letter-spacing:.5px;
+    padding:3px 12px 3px 8px;
+    clip-path:polygon(0 0,100% 0,88% 50%,100% 100%,0 100%);
+    box-shadow:0 2px 4px rgba(0,0,0,.4);
+  }
+
+  /* ---------- 94% social proof ---------- */
+  .stat{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin:44px 0 0;
+  }
+  .stat .laurel{width:54px;height:88px;}
+  .stat .big{
+    color:var(--gold);
+    font-weight:800;
+    font-size:62px;
+    line-height:1;
+  }
+  .stat-cap{
+    color:var(--muted);
+    font-size:17px;
+    margin:8px auto 0;
+    max-width:320px;
+  }
+
+  /* ---------- Feature box ---------- */
+  .features{
+    text-align:left;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:20px;
+    padding:26px 22px;
+    margin:40px 0 0;
+  }
+  .feat{display:flex;gap:16px;}
+  .feat + .feat{margin-top:26px;}
+  .feat .ico{
+    flex:0 0 auto;
+    width:40px;height:40px;border-radius:50%;
+    background:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    color:#141414;
+  }
+  .feat h3{margin:6px 0 6px;font-size:19px;font-weight:700;color:#fff;}
+  .feat p{margin:0;color:#a8a8a8;font-size:16px;line-height:1.5;}
+
+  /* ---------- Continue (inline + sticky) ---------- */
+  .btn-continue{
+    display:block;
+    width:100%;
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    background:linear-gradient(#f6cb46,#eeb831);
+    color:#1a1a1a;
+    font-weight:600;
+    font-size:19px;
+    padding:18px;
+    border-radius:40px;
+    box-shadow:0 6px 18px rgba(244,194,56,.28);
+  }
+  .btn-continue:active{transform:translateY(1px);}
+  .inline-btn{margin:40px 0 0;}
+
+  .sticky{
+    position:fixed;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:0;
+    width:100%;
+    max-width:var(--maxw);
+    padding:14px 24px calc(14px + env(safe-area-inset-bottom));
+    background:linear-gradient(to top, #000 60%, rgba(0,0,0,0));
+    z-index:20;
+  }
+
+  /* ---------- Legal ---------- */
+  .legal{
+    color:var(--muted-dim);
+    font-size:12.5px;
+    line-height:1.7;
+    text-align:center;
+    padding:26px 24px 10px;
+  }
+  .legal a{color:var(--muted-dim);}
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="grid">
+        <div class="col a" id="col-a"></div>
+        <div class="col b" id="col-b"></div>
+        <div class="col c" id="col-c"></div>
+      </div>
+
+      <div class="badge-wrap">
+        <div class="badge-row">
+          <!-- left laurel -->
+          <svg class="laurel" viewBox="0 0 70 110" fill="currentColor" aria-hidden="true">
+            <path d="M55 105 C40 95 28 80 22 62 C16 44 16 26 24 8 C26 16 30 22 35 27 C30 40 30 56 36 70 C40 82 47 95 55 105Z"/>
+            <g>
+              <ellipse cx="20" cy="30" rx="9" ry="5" transform="rotate(-35 20 30)"/>
+              <ellipse cx="16" cy="44" rx="9" ry="5" transform="rotate(-20 16 44)"/>
+              <ellipse cx="17" cy="58" rx="9" ry="5" transform="rotate(-5 17 58)"/>
+              <ellipse cx="22" cy="72" rx="9" ry="5" transform="rotate(12 22 72)"/>
+              <ellipse cx="31" cy="85" rx="9" ry="5" transform="rotate(28 31 85)"/>
+              <ellipse cx="42" cy="95" rx="8" ry="4.5" transform="rotate(42 42 95)"/>
+              <ellipse cx="33" cy="24" rx="8" ry="4.5" transform="rotate(-50 33 24)"/>
+              <ellipse cx="29" cy="38" rx="8" ry="4.5" transform="rotate(-30 29 38)"/>
+              <ellipse cx="30" cy="52" rx="8" ry="4.5" transform="rotate(-12 30 52)"/>
+              <ellipse cx="35" cy="66" rx="8" ry="4.5" transform="rotate(8 35 66)"/>
+              <ellipse cx="43" cy="79" rx="8" ry="4.5" transform="rotate(25 43 79)"/>
+            </g>
+          </svg>
+
+          <!-- seal -->
+          <div class="seal">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <path id="seal-path" fill="#f4c238" d=""/>
+              <circle cx="50" cy="50" r="33" fill="none" stroke="#fff" stroke-width="1.5" opacity=".75"/>
+            </svg>
+            <div class="seal-text">
+              <div class="free">FREE</div>
+              <div class="trial">7-day trial</div>
+            </div>
+          </div>
+
+          <!-- right laurel -->
+          <svg class="laurel right" viewBox="0 0 70 110" fill="currentColor" aria-hidden="true">
+            <path d="M55 105 C40 95 28 80 22 62 C16 44 16 26 24 8 C26 16 30 22 35 27 C30 40 30 56 36 70 C40 82 47 95 55 105Z"/>
+            <g>
+              <ellipse cx="20" cy="30" rx="9" ry="5" transform="rotate(-35 20 30)"/>
+              <ellipse cx="16" cy="44" rx="9" ry="5" transform="rotate(-20 16 44)"/>
+              <ellipse cx="17" cy="58" rx="9" ry="5" transform="rotate(-5 17 58)"/>
+              <ellipse cx="22" cy="72" rx="9" ry="5" transform="rotate(12 22 72)"/>
+              <ellipse cx="31" cy="85" rx="9" ry="5" transform="rotate(28 31 85)"/>
+              <ellipse cx="42" cy="95" rx="8" ry="4.5" transform="rotate(42 42 95)"/>
+              <ellipse cx="33" cy="24" rx="8" ry="4.5" transform="rotate(-50 33 24)"/>
+              <ellipse cx="29" cy="38" rx="8" ry="4.5" transform="rotate(-30 29 38)"/>
+              <ellipse cx="30" cy="52" rx="8" ry="4.5" transform="rotate(-12 30 52)"/>
+              <ellipse cx="35" cy="66" rx="8" ry="4.5" transform="rotate(8 35 66)"/>
+              <ellipse cx="43" cy="79" rx="8" ry="4.5" transform="rotate(25 43 79)"/>
+            </g>
+          </svg>
+        </div>
+        <div class="then">Then $29.99<br>for three months</div>
+      </div>
+    </section>
+
+    <!-- ===== CONTENT ===== -->
+    <main class="content">
+      <h1 class="head">
+        <span class="line1">Upgrade your subscription</span>
+        <span class="line2">with video stories</span>
+      </h1>
+      <p class="sub">Unlock exclusive premium video stories before they're gone.</p>
+
+      <!-- countdown -->
+      <div class="timer" id="timer">
+        <div class="digit" data-h1>0</div>
+        <div class="digit gap" data-h2>0</div>
+        <div class="colon">:</div>
+        <div class="digit" data-m1>0</div>
+        <div class="digit gap" data-m2>5</div>
+        <div class="colon">:</div>
+        <div class="digit" data-s1>0</div>
+        <div class="digit" data-s2>0</div>
+      </div>
+
+      <!-- premium cards -->
+      <div class="cards">
+        <div class="pcard" id="pc1"><span class="ribbon">PREMIUM</span></div>
+        <div class="pcard center" id="pc2"><span class="ribbon">PREMIUM</span></div>
+        <div class="pcard" id="pc3"><span class="ribbon">PREMIUM</span></div>
+      </div>
+
+      <!-- 94% -->
+      <div class="stat">
+        <svg class="laurel" viewBox="0 0 70 110" fill="currentColor" aria-hidden="true">
+          <path d="M55 105 C40 95 28 80 22 62 C16 44 16 26 24 8 C26 16 30 22 35 27 C30 40 30 56 36 70 C40 82 47 95 55 105Z"/>
+          <g>
+            <ellipse cx="20" cy="30" rx="9" ry="5" transform="rotate(-35 20 30)"/>
+            <ellipse cx="16" cy="44" rx="9" ry="5" transform="rotate(-20 16 44)"/>
+            <ellipse cx="17" cy="58" rx="9" ry="5" transform="rotate(-5 17 58)"/>
+            <ellipse cx="22" cy="72" rx="9" ry="5" transform="rotate(12 22 72)"/>
+            <ellipse cx="31" cy="85" rx="9" ry="5" transform="rotate(28 31 85)"/>
+            <ellipse cx="33" cy="24" rx="8" ry="4.5" transform="rotate(-50 33 24)"/>
+            <ellipse cx="29" cy="38" rx="8" ry="4.5" transform="rotate(-30 29 38)"/>
+            <ellipse cx="30" cy="52" rx="8" ry="4.5" transform="rotate(-12 30 52)"/>
+            <ellipse cx="35" cy="66" rx="8" ry="4.5" transform="rotate(8 35 66)"/>
+          </g>
+        </svg>
+        <div class="big">94%</div>
+        <svg class="laurel right" viewBox="0 0 70 110" fill="currentColor" aria-hidden="true">
+          <path d="M55 105 C40 95 28 80 22 62 C16 44 16 26 24 8 C26 16 30 22 35 27 C30 40 30 56 36 70 C40 82 47 95 55 105Z"/>
+          <g>
+            <ellipse cx="20" cy="30" rx="9" ry="5" transform="rotate(-35 20 30)"/>
+            <ellipse cx="16" cy="44" rx="9" ry="5" transform="rotate(-20 16 44)"/>
+            <ellipse cx="17" cy="58" rx="9" ry="5" transform="rotate(-5 17 58)"/>
+            <ellipse cx="22" cy="72" rx="9" ry="5" transform="rotate(12 22 72)"/>
+            <ellipse cx="31" cy="85" rx="9" ry="5" transform="rotate(28 31 85)"/>
+            <ellipse cx="33" cy="24" rx="8" ry="4.5" transform="rotate(-50 33 24)"/>
+            <ellipse cx="29" cy="38" rx="8" ry="4.5" transform="rotate(-30 29 38)"/>
+            <ellipse cx="30" cy="52" rx="8" ry="4.5" transform="rotate(-12 30 52)"/>
+            <ellipse cx="35" cy="66" rx="8" ry="4.5" transform="rotate(8 35 66)"/>
+          </g>
+        </svg>
+      </div>
+      <p class="stat-cap">of users say Epictok helps them learn and unwind</p>
+
+      <!-- features -->
+      <div class="features">
+        <div class="feat">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H2z"/>
+              <path d="M22 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Real Stories. Real Legends.</h3>
+            <p>Get pulled into gripping stories about real people who shaped the world. Bite-sized, powerful, and made to spark your curiosity.</p>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 4l14 8-14 8z"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Anytime, Anywhere</h3>
+            <p>Watch captivating animated stories on your schedule — on a walk, during a break, or before bed. History's greatest minds brought to life, right in your pocket.</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-continue inline-btn">Continue</button>
+
+      <p class="legal">
+        By clicking above, you agree to start a 7-day free trial of the premium feature.
+        After the trial, a charge of twenty-nine dollars and ninety-nine cents will apply for a
+        three months subscription. Your subscription will automatically renew at the same price
+        using the billing information provided. You can cancel your subscription anytime through
+        your account settings.<br>
+        <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> apply.<br>
+        For more details, contact us at <a href="mailto:support@epictok.me">support@epictok.me</a>.
+      </p>
+    </main>
+
+    <!-- sticky continue -->
+    <div class="sticky">
+      <button class="btn-continue">Continue</button>
+    </div>
+  </div>
+
+<script>
+  /* ---- generate the scalloped seal badge shape ---- */
+  (function(){
+    const cx=50, cy=50, N=14, rOut=48, rIn=41, total=N*24;
+    let d="";
+    for(let i=0;i<=total;i++){
+      const theta = (i/total)*Math.PI*2;        // 0..2π
+      const a = theta - Math.PI/2;              // start at top
+      const r = rIn + (rOut-rIn)*(0.5+0.5*Math.cos(N*theta)); // scalloped bumps
+      const x = cx + r*Math.cos(a);
+      const y = cy + r*Math.sin(a);
+      d += (i===0?"M":"L") + x.toFixed(2) + " " + y.toFixed(2) + " ";
+    }
+    d += "Z";
+    document.getElementById('seal-path').setAttribute('d', d);
+  })();
+
+  /* ---- generate cinematic poster tiles for the scrolling grid ---- */
+  const palettes = [
+    ['#3a2c1c','#0c0907'], ['#243447','#070a0d'], ['#4a2118','#0e0604'],
+    ['#33291a','#0a0805'], ['#1f2d2a','#060908'], ['#46321f','#0d0905'],
+    ['#2b2233','#08060a'], ['#52371d','#0f0804'], ['#1c2733','#06080a'],
+    ['#3d2a2a','#0b0606']
+  ];
+  const titles = [
+    ['Family and reform','1910'], ['A Nova Ordem','1933'], ['Resistance','1839'],
+    ['Secret of Empire','1833'], ['The Heir','1905'], ['Legacy','1888'],
+    ['The General','1915'], ['Iron Will','1871'], ['Crowned','1804'],
+    ['The Last Stand','1942'], ['Shadows','1929'], ['Diplomacy','1856']
+  ];
+  function makePoster(i){
+    const p = palettes[i % palettes.length];
+    const t = titles[i % titles.length];
+    const el = document.createElement('div');
+    el.className = 'poster';
+    el.style.backgroundImage =
+      `radial-gradient(120% 90% at 50% 25%, ${p[0]} 0%, ${p[1]} 80%)`;
+    el.innerHTML = `<div class="title"><div class="t">${t[0]}</div><div class="y">${t[1]}</div></div>`;
+    return el;
+  }
+  function fillColumn(id, offset){
+    const col = document.getElementById(id);
+    // duplicate set for seamless loop
+    for(let r=0;r<2;r++){
+      for(let i=0;i<6;i++){ col.appendChild(makePoster(i+offset)); }
+    }
+  }
+  fillColumn('col-a',0);
+  fillColumn('col-b',3);
+  fillColumn('col-c',6);
+
+  /* ---- premium card backgrounds ---- */
+  const cardGrads = {
+    pc1:'radial-gradient(120% 100% at 50% 20%, #5a6b8a 0%, #1b2536 70%, #0c1018 100%)',
+    pc2:'radial-gradient(120% 100% at 50% 25%, #c98a9e 0%, #7a3a4e 60%, #2b1118 100%)',
+    pc3:'radial-gradient(120% 100% at 50% 20%, #6a5a44 0%, #342819 65%, #140f08 100%)'
+  };
+  Object.entries(cardGrads).forEach(([id,g])=>{ document.getElementById(id).style.backgroundImage=g; });
+
+  /* ---- countdown timer ---- */
+  let total = 5*60; // 5 minutes
+  const T = document.getElementById('timer');
+  const cells = {
+    h1:T.querySelector('[data-h1]'), h2:T.querySelector('[data-h2]'),
+    m1:T.querySelector('[data-m1]'), m2:T.querySelector('[data-m2]'),
+    s1:T.querySelector('[data-s1]'), s2:T.querySelector('[data-s2]')
+  };
+  function render(){
+    const h = Math.floor(total/3600);
+    const m = Math.floor((total%3600)/60);
+    const s = total%60;
+    cells.h1.textContent = Math.floor(h/10);
+    cells.h2.textContent = h%10;
+    cells.m1.textContent = Math.floor(m/10);
+    cells.m2.textContent = m%10;
+    cells.s1.textContent = Math.floor(s/10);
+    cells.s2.textContent = s%10;
+  }
+  render();
+  setInterval(()=>{ total = total>0 ? total-1 : 5*60; render(); }, 1000);
+</script>
+</body>
+</html>
