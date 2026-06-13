@@ -126,6 +126,7 @@
   }
   .seal .free{font-weight:800;font-size:34px;letter-spacing:.5px;line-height:1;}
   .seal .trial{font-weight:700;font-size:15px;margin-top:4px;}
+  .seal-logo{width:74px;height:74px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25));}
   .then{
     margin-top:14px;
     color:var(--gold);
@@ -335,15 +336,16 @@
               <circle cx="50" cy="50" r="33" fill="none" stroke="#fff" stroke-width="1.5" opacity=".75"/>
             </svg>
             <div class="seal-text">
-              <div class="free">FREE</div>
-              <div class="trial">7-day trial</div>
+              <svg class="seal-logo" viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="30" fill="#1c1c1c"/>
+                <path d="M43 36 L68 50 L43 64 Z" fill="#f4c238"/>
+              </svg>
             </div>
           </div>
 
           <!-- right wheat -->
           <svg class="laurel right" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#wheat"/></svg>
         </div>
-        <div class="then">Then $29.99<br>for three months</div>
       </div>
     </section>
 
