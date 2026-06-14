@@ -171,15 +171,8 @@
     50%{transform:scale(1) rotate(45deg);opacity:1;}
   }
 
-  /* app name gold shimmer */
-  .app-name{animation:nameGlow 2.6s ease-in-out infinite;}
-  @keyframes nameGlow{
-    0%,100%{text-shadow:0 2px 10px rgba(0,0,0,.85);}
-    50%{text-shadow:0 2px 10px rgba(0,0,0,.85),0 0 16px rgba(244,194,56,.6);}
-  }
-
   @media (prefers-reduced-motion:reduce){
-    .seal,.seal-star,.seal::after,.seal::before,.spark,.app-name,.btn-continue{animation:none;}
+    .seal,.seal-star,.seal::after,.seal::before,.spark,.btn-continue{animation:none;}
   }
   .seal .seal-text{
     position:absolute;inset:0;
@@ -189,13 +182,13 @@
   .seal .free{font-weight:800;font-size:34px;letter-spacing:.5px;line-height:1;}
   .seal .trial{font-weight:700;font-size:15px;margin-top:4px;}
   .seal-logo{width:74px;height:74px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25));}
-  .app-name{
-    margin-top:16px;
-    color:#fff;
-    font-weight:700;
-    font-size:23px;
-    letter-spacing:.5px;
-    text-shadow:0 2px 10px rgba(0,0,0,.85);
+  .then{
+    margin-top:14px;
+    color:var(--gold);
+    font-weight:500;
+    font-size:18px;
+    line-height:1.3;
+    text-shadow:0 2px 10px rgba(0,0,0,.8);
   }
 
   /* ---------- Body content ---------- */
@@ -377,11 +370,8 @@
               <circle cx="50" cy="50" r="33" fill="none" stroke="#fff" stroke-width="1.5" opacity=".75"/>
             </svg>
             <div class="seal-text">
-              <svg class="seal-logo" viewBox="0 0 100 100" aria-hidden="true">
-                <circle cx="50" cy="50" r="30" fill="#1c1c1c"/>
-                <circle cx="41" cy="42" r="4.5" fill="#f4c238"/>
-                <path d="M33 63 L46 47 L54 57 L61 49 L68 63 Z" fill="#f4c238"/>
-              </svg>
+              <div class="free">FREE</div>
+              <div class="trial">7-day trial</div>
             </div>
             <span class="spark s1"></span>
             <span class="spark s2"></span>
@@ -393,14 +383,14 @@
           <!-- right wheat -->
           <svg class="laurel right" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#wheat"/></svg>
         </div>
-        <div class="app-name">Wallora</div>
+        <div class="then">Then $29.9<br>per month</div>
       </div>
     </section>
 
     <!-- ===== CONTENT ===== -->
     <main class="content">
       <h1 class="head">Join <span class="brand">Wallora</span> now</h1>
-      <p class="sub">Unlock every premium wallpaper and exclusive collection, with new drops every week. Just $29.9 per month — cancel anytime.</p>
+      <p class="sub">Unlock every premium wallpaper and exclusive collection, with new drops every week — cancel anytime.</p>
 
       <!-- premium cards -->
       <div class="cards">
